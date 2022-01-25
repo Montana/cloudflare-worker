@@ -1,0 +1,23 @@
+load(
+    "@elide//defs/toolchain/cloudflare:deploy.bzl",
+    "cloudflare_worker",
+)
+
+cloudflare_worker(
+    name = "<some_target_name>",
+    worker = "<worker_name>",
+    entrypoint = "entrypoint.js",
+    wasm = True,
+    rust_test = glob(["test_lib/*.rs"]),
+    js_test = "worker_wasm_js_test.js",
+    srcs = ["main.rs"],
+    deps = [
+        ":worker_lib", 
+    ],
+    data = [ 
+        "Cargo.toml",
+        "Cargo.lock",
+        "metadata.json",
+        "package.json",
+    ],
+)
